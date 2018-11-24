@@ -9,13 +9,13 @@ import { LoggerService } from '../../services/logger.service';
 })
 export class TestLoggerComponent implements OnInit {
 
-  private logger: LoggerService;
+  private mLogger: LoggerService;
 
   /**
    * Constructor.
    */
   constructor(logger: LoggerService) {
-    this.logger = logger;
+    this.mLogger = logger;
   }
 
   /**
@@ -23,9 +23,9 @@ export class TestLoggerComponent implements OnInit {
    * Called after object is constructed.
    */
   ngOnInit() {
-    this.logger.LogError('ErrorTag', 'This is an error.');
-    this.logger.LogWarning('WarningTag', 'This is a warning.');
-    this.logger.LogMessage('MessageTag', 'This is a message.');
+    this.mLogger.LogError('ErrorTag', 'This is an error.', { err: 'ErrorObject' });
+    this.mLogger.LogWarning('WarningTag', 'This is a warning.');
+    this.mLogger.LogMessage('MessageTag', 'This is a message.');
   }
 
 }

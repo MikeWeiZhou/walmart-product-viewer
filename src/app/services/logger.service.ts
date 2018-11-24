@@ -20,9 +20,9 @@ export class LoggerService {
    * @param tag for grouping this error
    * @param msg to log
    */
-  LogError(tag: string, msg: string) {
-    console.error(tag + ' ERROR:');
-    console.error(msg);
+  LogError(tag: string, msg: string, err: any) {
+    console.error(`${tag} ERROR: ${msg}`);
+    console.error(err);
   }
 
   /**
@@ -31,8 +31,7 @@ export class LoggerService {
    * @param msg to log
    */
   LogWarning(tag: string, msg: string) {
-    console.warn(tag + ' Warning:');
-    console.warn(msg);
+    console.warn(`${tag} Warning: ${msg}`);
   }
 
   /**
@@ -41,7 +40,6 @@ export class LoggerService {
    * @param msg to log
    */
   LogMessage(tag: string, msg: string) {
-    console.log(tag + ' message:');
-    console.log(msg);
+    console.log(`${tag} Message: ${msg}`);
   }
 }
