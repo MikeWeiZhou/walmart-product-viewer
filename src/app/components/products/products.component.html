@@ -5,3 +5,8 @@
     <div class="product-price">Price: ${{ product.salePrice }}</div>
   </div>
 </div>
+
+<div id="navigation">
+  <button id="previous-page" (click)="LoadPreviousPage()" *ngIf="HasPreviousPage">&laquo; Previous Page</button>
+  <button id="next-page" (click)="LoadNextPage()" *ngIf="HasNextPage">Next Page &raquo;</button>
+</div>

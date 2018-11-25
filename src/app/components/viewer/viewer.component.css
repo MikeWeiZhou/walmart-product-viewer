@@ -1,13 +1,13 @@
-#viewer {
+div#viewer {
   display: flex;
 }
 
-#left-column {
+div#left-column {
   min-width: 350px;
   max-width: 350px;
   flex-basis: auto;
 }
 
-#right-column {
+div#right-column {
   flex: 100%;
 }

@@ -1,19 +1,27 @@
-#products-list {
+div#products-list {
   display: flex;
   flex-wrap: wrap;
 }
 
-.product-container {
+button#previous-page {
+  float: left;
+}
+
+button#next-page {
+  float: right;
+}
+
+div.product-container {
   width: 200px;
   margin-bottom: 25px;
 }
 
-.product-name {
+div.product-name {
   font-weight: bold;
 }
 
-.product-image {
+div.product-image {
 }
 
-.product-price {
+div.product-price {
 }
