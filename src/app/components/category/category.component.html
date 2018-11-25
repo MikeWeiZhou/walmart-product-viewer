@@ -1,0 +1,11 @@
+<a routerLink="/products/{{ Category.id }}">{{ Category.name }}</a> 
+
+<a *ngIf="Category.children" (click)="OnClickCategory(Category)">[expand]</a>
+
+<ul class="child-categories"
+  *ngIf="Category.children"
+  [class.expanded-category]="IsExpanded">
+  <li *ngFor="let childCategory of Category.children">
+    <app-category [Category]="childCategory"></app-category>
+  </li>
+</ul>
