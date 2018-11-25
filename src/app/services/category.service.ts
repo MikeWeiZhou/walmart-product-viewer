@@ -38,6 +38,10 @@ export class CategoryService {
     this.mLogger = logger;
   }
 
+  // Used only to improve VS Code IntelliSense
+  // IntelliSense will show overloaded functions
+  public GetCategory();
+  public GetCategory(categoryId: string);
   /**
    * Returns a nested Category array, or empty array.
    * @param [categoryId] selected category id
@@ -88,7 +92,6 @@ export class CategoryService {
    * @param category to look in, including children categories
    */
   private getCategoryFromIdOrNull(findCatId: string, category: Category) {
-
     // Found category
     if (category.id == findCatId) {
       return category;
@@ -114,13 +117,11 @@ export class CategoryService {
    * @returns an anoymyous function that handle errors and returns an Observable[]
    */
   private handleHttpErrorResponse<T>(tag: string, defaultResult: T): (err: any, caught: Observable<any>) => ObservableInput<{}> {
-
     /**
      * @param error HttpErrorResponse containing response errors and RxJS's ErrorEvents
      * @returns default result as Observable<T>
      */
     return (error: any): Observable<T> => {
-
       // Client-side or network error
       if (
         error.error &&
