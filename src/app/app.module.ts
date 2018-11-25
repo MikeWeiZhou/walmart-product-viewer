@@ -6,14 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './components/category/category.component';
 // import { ProductsComponent } from './components/products/products.component';
-// import { ViewerComponent } from './components/viewer/viewer.component';
+import { ViewerComponent } from './components/viewer/viewer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoryComponent,
     // ProductsComponent,
-    // ViewerComponent
+    ViewerComponent
   ],
   imports: [
     BrowserModule,

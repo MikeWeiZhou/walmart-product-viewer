@@ -1,0 +1,13 @@
+#viewer {
+  display: flex;
+}
+
+#left-column {
+  min-width: 350px;
+  max-width: 350px;
+  flex-basis: auto;
+}
+
+#right-column {
+  flex: 100%;
+}

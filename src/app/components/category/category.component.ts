@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoryService } from 'src/app/services/category.service';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Category } from '../../models/category';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-category',
@@ -11,14 +10,15 @@ import { Category } from '../../models/category';
   styleUrls: ['./category.component.css']
 })
 /**
- * TestCategoryComponent.
+ * CategoryComponent.
  * 
- * Test CategoryService functionality.
+ * Gets one category and its children.
  */
 export class CategoryComponent implements OnInit {
 
-  // Category
-  public Category: Category;
+  // Category input/outputs
+  @Input() public Category: Category;
+  @Output() public CategoryChange: EventEmitter<Category> = new EventEmitter<Category>();
 
   // Services
   private mRoute: ActivatedRoute;
@@ -26,7 +26,9 @@ export class CategoryComponent implements OnInit {
 
   /**
    * Constructor.
-   * @param category CategoryServer
+   * @param route ActivatedRoute
+   * @param router Router
+   * @param category CategoryService
    */
   constructor(route: ActivatedRoute, router: Router, category: CategoryService) {
     this.mRoute = route;
@@ -34,8 +36,7 @@ export class CategoryComponent implements OnInit {
 
     // Same route with different parameters will not trigger a refresh
     // i.e. Clicking on child categories does not trigger refresh
-    // This setting will trigger a refresh
-    router.routeReuseStrategy.shouldReuseRoute = () => { return false; };
+    // This setting will trigger a refresh for all components loaded on page
   }
 
   /**
@@ -43,27 +44,18 @@ export class CategoryComponent implements OnInit {
    * Called after object is constructed.
    */
   ngOnInit() {
-    this.getCategory();
   }
 
   /**
-   * Get Category.
+   * Set's this.Category to specified category, or root category if not found.
+   * @param categoryId specified category ID
    */
-  private getCategory(): void {
-
-    // category ID from URL (router)
-    let id: string = this.mRoute.snapshot.paramMap.get('categoryId');
-
-    // Get root category and its children
-    if (id === null) {
-      this.mCategoryService.GetCategory()
-        .subscribe((cat: Category) => { this.Category = cat; });
-    }
-
-    // Get selected category and its children
-    else {
-      this.mCategoryService.GetCategory(id)
-        .subscribe((cat: Category) => { this.Category = cat; });
-    }
+  public SetCurrentCategory(categoryId: string): void {
+    this.mCategoryService.GetCategory(categoryId)
+      .subscribe((cat: Category) => {
+        this.Category = cat;
+        this.CategoryChange.emit(this.Category);
+      }
+    );
   }
 }

@@ -1,5 +1,7 @@
 ul.category {
+  font-weight: bold;
 }
 
-ul.child-categories {
+ul.child-category {
+  font-weight: normal;
 }

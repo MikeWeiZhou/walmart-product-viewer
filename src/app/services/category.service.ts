@@ -43,9 +43,9 @@ export class CategoryService {
   public GetCategory();
   public GetCategory(categoryId: string);
   /**
-   * Returns a nested Category array, or empty array.
-   * @param [categoryId] selected category id
-   * @returns Observable<Category[]>, Category[] may be empty array
+   * Returns specified Category, or root category.
+   * @param [categoryId] specified category id
+   * @returns Observable<Category>
    */
   public GetCategory(categoryId?: string): Observable<Category> {
     return of(TaxonomyValidMock)

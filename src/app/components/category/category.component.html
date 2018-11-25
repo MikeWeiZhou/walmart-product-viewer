@@ -1,9 +1,10 @@
 <ul class="category" *ngIf="Category">
   <li>
     {{ Category.name }}
-    <ul class="child-categories" *ngIf="Category.children">
+    <ul class="child-category" *ngIf="Category.children">
       <li *ngFor="let childCategory of Category.children">
-        <a routerLink="/category/{{ childCategory.id }}">{{ childCategory.name }}</a>
+        <!-- <a routerLink="/category/{{ childCategory.id }}">{{ childCategory.name }}</a> -->
+        <a (click)="SetCurrentCategory(childCategory.id)">{{ childCategory.name }}</a>
       </li>
     </ul>
   </li>
