@@ -1,6 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Unit test files
 *.spec.ts
+# Archived folder
+/archive
 
 # compiled output
 /dist
