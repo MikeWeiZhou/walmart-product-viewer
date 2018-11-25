@@ -39,9 +39,9 @@ export class PaginatedService {
   }
 
   /**
-   * Returns one page of products as an array.
+   * Returns one page of products as an Observable.
    * @param [options] paginated options
-   * @returns Observable<{}>, may be empty object
+   * @returns product results as Observable<{[]}>, may be empty object
    */
   public GetProducts(
     options?: {
@@ -53,9 +53,17 @@ export class PaginatedService {
     const url: string = this.getPageUrl(options);
     return this.mHttp.get<any>(url)
       .pipe(
+        map(response => {
+          if (response.format) {
+            return response;
+          }
+          else {
+            throw new Error('Invalid Response.');
+          }
+        }),
         catchError(
           // handle error and return empty object
-          this.handleHttpErrorResponse<{}>('PaginatedService', {})
+          this.handleError<{}>('PaginatedService', {})
         )
       );
   }
@@ -77,21 +85,21 @@ export class PaginatedService {
     if (options) {
       if (options.categoryId)         { url += `&category=${options.categoryId}`; }
       if (options.productsPerPage)    { url += `&count=${options.productsPerPage}`; }
-      if (options.prevPageMaxItemId)  { url += `&maxItemId=${options.prevPageMaxItemId}`; }
+      if (options.prevPageMaxItemId)  { url += `&maxId=${options.prevPageMaxItemId}`; }
     }
 
     return url;
   }
 
   /**
-   * Handles HttpErrorResponse errors for Observables and returns default result to subscribers.
+   * Handles errors for Observables and returns default result to subscribers.
    * @param tag for grouping this error
    * @param defaultResult default result to return to subscribers
    * @returns an anoymyous function that handle errors and returns an Observable[]
    */
-  private handleHttpErrorResponse<T>(tag: string, defaultResult: T): (err: any, caught: Observable<any>) => ObservableInput<{}> {
+  private handleError<T>(tag: string, defaultResult: T): (err: any, caught: Observable<any>) => ObservableInput<{}> {
     /**
-     * @param error HttpErrorResponse containing response errors and RxJS's ErrorEvents
+     * @param error containing response errors and RxJS's ErrorEvents
      * @returns default result as Observable<T>
      */
     return (error: any): Observable<T> => {
