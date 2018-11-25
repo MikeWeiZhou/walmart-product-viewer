@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 import { Category } from '../../models/category';
 import { CategoryService } from 'src/app/services/category.service';
@@ -20,23 +19,18 @@ export class CategoryComponent implements OnInit {
   @Input() public Category: Category;
   @Output() public CategoryChange: EventEmitter<Category> = new EventEmitter<Category>();
 
-  // Services
-  private mRoute: ActivatedRoute;
+  // Category Service
   private mCategoryService: CategoryService;
+
+  // Track Category Navigation
+  // private mCategoryId: string[] = [];
 
   /**
    * Constructor.
-   * @param route ActivatedRoute
-   * @param router Router
    * @param category CategoryService
    */
-  constructor(route: ActivatedRoute, router: Router, category: CategoryService) {
-    this.mRoute = route;
+  constructor(category: CategoryService) {
     this.mCategoryService = category;
-
-    // Same route with different parameters will not trigger a refresh
-    // i.e. Clicking on child categories does not trigger refresh
-    // This setting will trigger a refresh for all components loaded on page
   }
 
   /**
@@ -47,14 +41,29 @@ export class CategoryComponent implements OnInit {
   }
 
   /**
+   * Set's this.Category to current directory's parent
+   */
+  // public SetToParentCategory(): void {
+  // }
+
+  /**
    * Set's this.Category to specified category, or root category if not found.
    * @param categoryId specified category ID
    */
-  public SetCurrentCategory(categoryId: string): void {
+  public SetCategory(categoryId: string): void {
     this.mCategoryService.GetCategory(categoryId)
       .subscribe((cat: Category) => {
         this.Category = cat;
         this.CategoryChange.emit(this.Category);
+
+        // // remove unused category IDs
+        // // i.e. when navigating to parent category
+        // const i: number = this.mCategoryId.findIndex(catId => { return catId == categoryId; });
+        // if (i >= 0) {
+        //   this.mCategoryId = this.mCategoryId.slice(0, i + 1);
+        // }
+
+        // console.log(this.mCategoryId);
       }
     );
   }
