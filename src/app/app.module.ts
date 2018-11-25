@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './components/category/category.component';
-import { CategoriesComponent } from './components/categories/categories.component';
+// import { ProductsComponent } from './components/products/products.component';
 
 import { TestLoggerComponent } from './components/test-logger/test-logger.component';
 
@@ -13,7 +13,7 @@ import { TestLoggerComponent } from './components/test-logger/test-logger.compon
   declarations: [
     AppComponent,
     CategoryComponent,
-    CategoriesComponent,
+    // ProductsComponent,
     TestLoggerComponent
   ],
   imports: [

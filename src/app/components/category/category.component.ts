@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CategoryService } from 'src/app/services/category.service';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Category } from '../../models/category';
 
@@ -7,18 +10,32 @@ import { Category } from '../../models/category';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css']
 })
+/**
+ * TestCategoryComponent.
+ * 
+ * Test CategoryService functionality.
+ */
 export class CategoryComponent implements OnInit {
 
-  // Passed in from caller component template
-  @Input() public Category: Category;
+  // Category
+  public Category: Category;
 
-  // Is Category expanded?
-  public IsExpanded: boolean;
+  // Services
+  private mRoute: ActivatedRoute;
+  private mCategoryService: CategoryService;
 
   /**
    * Constructor.
+   * @param category CategoryServer
    */
-  constructor() {
+  constructor(route: ActivatedRoute, router: Router, category: CategoryService) {
+    this.mRoute = route;
+    this.mCategoryService = category;
+
+    // Same route with different parameters will not trigger a refresh
+    // i.e. Clicking on child categories does not trigger refresh
+    // This setting will trigger a refresh
+    router.routeReuseStrategy.shouldReuseRoute = () => { return false; };
   }
 
   /**
@@ -26,12 +43,27 @@ export class CategoryComponent implements OnInit {
    * Called after object is constructed.
    */
   ngOnInit() {
+    this.getCategory();
   }
 
   /**
-   * Toggle child Categories visibility.
+   * Get Category.
    */
-  public OnClickCategory(): void {
-    this.IsExpanded = !this.IsExpanded;
+  private getCategory(): void {
+
+    // category ID from URL (router)
+    let id: string = this.mRoute.snapshot.paramMap.get('categoryId');
+
+    // Get root category and its children
+    if (id === null) {
+      this.mCategoryService.GetCategory()
+        .subscribe((cat: Category) => { this.Category = cat; });
+    }
+
+    // Get selected category and its children
+    else {
+      this.mCategoryService.GetCategory(id)
+        .subscribe((cat: Category) => { this.Category = cat; });
+    }
   }
 }

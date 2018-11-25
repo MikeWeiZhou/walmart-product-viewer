@@ -4,6 +4,7 @@ import { Observable, of, ObservableInput } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
+import { TaxonomyValidMock } from '../mockdata/taxonomy-valid.mock';
 
 import { Category } from '../models/category';
 import { LoggerService } from './logger.service';
@@ -39,20 +40,71 @@ export class CategoryService {
 
   /**
    * Returns a nested Category array, or empty array.
-   * @param [parent] category id or Category object
+   * @param [categoryId] selected category id
    * @returns Observable<Category[]>, Category[] may be empty array
    */
-  public GetCategories(): Observable<Category[]> {
-    return this.mHttp.get<any>(this.ACCESS_URL)
+  public GetCategory(categoryId?: string): Observable<Category> {
+    return of(TaxonomyValidMock)
+    // return this.mHttp.get<any>(this.ACCESS_URL)
       .pipe(
         map(response => {
-          // map response.categories as the return value
-          return response.categories;
+          // put all categories under one root category
+          const rootCategory: Category = {
+            id: '',
+            name: 'All Categories',
+            path: '',
+            children: response.categories
+          };
+
+          // return selected category, if found
+          if (categoryId) {
+            let category: Category = this.getCategoryFromIdOrNull(categoryId, rootCategory);
+            if (category != null) {
+              return category;
+            }
+          }
+
+          // return root category by default
+          return rootCategory;
         }),
+
         catchError(
-          this.handleHttpErrorResponse<Category[]>('CategoryService', [])
+          // handle error and return a blank Category object
+          this.handleHttpErrorResponse<Category>(
+            'CategoryService', {
+              id: '',
+              name: '',
+              path: '',
+              children: null
+            }
+          )
         )
       );
+  }
+
+  /**
+   * Recursively search and return Category with a specified ID, or returns null.
+   * @param findCatId Category ID to look for
+   * @param category to look in, including children categories
+   */
+  private getCategoryFromIdOrNull(findCatId: string, category: Category) {
+
+    // Found category
+    if (category.id == findCatId) {
+      return category;
+    }
+
+    // Search children categories recursively
+    else if (category.children) {
+      let result: Category = null;
+      for (let i = 0; result === null && i < category.children.length; ++i) {
+        result = this.getCategoryFromIdOrNull(findCatId, category.children[i]);
+      }
+      return result;
+    }
+
+    // Can not find
+    return null;
   }
 
   /**

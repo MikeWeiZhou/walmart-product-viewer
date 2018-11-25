@@ -1,11 +1,12 @@
 /**
- * Walmart Category model. (matches Taxonomy API response object)
+ * Walmart Category model.
+ * (matches Taxonomy API response object)
  * 
  * Used for VS Code Intellisense.
  * JavaScript does not enforce this model.
  */
 export class Category {
-  id: number;
+  id: string;
   name: string;
   path: string;
 

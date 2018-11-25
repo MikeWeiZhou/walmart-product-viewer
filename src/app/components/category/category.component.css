@@ -1,7 +1,5 @@
-ul.child-categories {
-    display: none;
+ul.category {
 }
 
-ul.expanded-category {
-    display: block;
+ul.child-categories {
 }
