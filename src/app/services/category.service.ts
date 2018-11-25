@@ -15,7 +15,8 @@ import { LoggerService } from './logger.service';
 /**
  * CategoryService.
  * 
- * Serves category data. Interfaces with Walmart API (endpoints based on environment config).
+ * Serves category data. Interfaces with Taxonomy API (endpoints based on environment config).
+ * https://developer.walmartlabs.com/docs/read/Taxonomy_API
  */
 export class CategoryService {
 
@@ -38,18 +39,14 @@ export class CategoryService {
     this.mLogger = logger;
   }
 
-  // Used only to improve VS Code IntelliSense
-  // IntelliSense will show overloaded functions
-  public GetCategory();
-  public GetCategory(categoryId: string);
   /**
    * Returns specified Category, or root category.
    * @param [categoryId] specified category id
    * @returns Observable<Category>
    */
   public GetCategory(categoryId?: string): Observable<Category> {
-    return of(TaxonomyValidMock)
-    // return this.mHttp.get<any>(this.ACCESS_URL)
+    // return of(TaxonomyValidMock)
+    return this.mHttp.get<any>(this.ACCESS_URL)
       .pipe(
         map(response => {
           // put all categories under one root category
@@ -129,7 +126,7 @@ export class CategoryService {
         error.error instanceof ErrorEvent
       ) {
         this.mLogger.LogError(
-          'CategoryService',
+          tag,
           error.error.message,
           error.error
         );
@@ -138,7 +135,7 @@ export class CategoryService {
       // Backend returned unsuccessful response code
       else {
         this.mLogger.LogError(
-          'CategoryService',
+          tag,
           `Backend response code: ${error.status}`,
           error.error
         );
