@@ -5,3 +5,13 @@ ul.category {
 ul.child-category {
   font-weight: normal;
 }
+
+a {
+  text-decoration: underline;
+  color: blue;
+}
+
+a:hover {
+  color: gray;
+  cursor: pointer;
+}
