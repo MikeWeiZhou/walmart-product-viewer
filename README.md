@@ -8,8 +8,11 @@ An exercise in Angular and API handling.
 ## To Do / Future Improvements
 
 #### General
+- log history for browser (back button does not work properly)
 - cache API results to decrease latency from Walmart API
 
 #### Categories
+- categories should look like a link (currently looks like a text list)
+- should have a parent directory link
 - **category filtering** to assist user searching
-- lazy load child categories to improve initial DOM rendering speed
+- ~~lazy load child categories to improve initial DOM rendering speed~~
