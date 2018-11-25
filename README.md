@@ -8,6 +8,7 @@ An exercise in Angular and API handling.
 ## To Do / Future Improvements
 
 #### General
+- some modal notification for errors
 - log history for browser (back button does not work properly)
 - cache API results to decrease latency from Walmart API
 
@@ -16,3 +17,6 @@ An exercise in Angular and API handling.
 - should have a parent directory link
 - **category filtering** to assist user searching
 - ~~lazy load child categories to improve initial DOM rendering speed~~
+
+#### Products
+- have default image (some image links are broken)
