@@ -7,9 +7,6 @@ import { ViewerComponent } from './components/viewer/viewer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/viewer', pathMatch: 'full' },
-  { path: 'category', component: CategoryComponent },
-  { path: 'category/:categoryId', component: CategoryComponent },
-  // { path: 'products/:categoryId', component: ProductsComponent },
   { path: 'viewer', component: ViewerComponent }
 ];
 
