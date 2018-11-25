@@ -1,0 +1,19 @@
+#products-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-container {
+  width: 200px;
+  margin-bottom: 25px;
+}
+
+.product-name {
+  font-weight: bold;
+}
+
+.product-image {
+}
+
+.product-price {
+}

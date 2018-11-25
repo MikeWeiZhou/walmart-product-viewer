@@ -1,11 +1,8 @@
 <div id="viewer">
   <div id="left-column">
-    In Category: {{ Category.name }}
-    <br />
-    <br />
     <app-category [(Category)]="Category"></app-category>
   </div>
   <div id="right-column">
-    test
+    <app-products [(Category)]="Category"></app-products>
   </div>
 </div>
