@@ -16,14 +16,15 @@ import { CategoryService } from 'src/app/services/category.service';
 export class CategoryComponent implements OnInit {
 
   // Category input/outputs
-  @Input() public Category: Category;
+  // Synchronizes Category with parent components
   @Output() public CategoryChange: EventEmitter<Category> = new EventEmitter<Category>();
+  private _category: Category;
+  @Input()
+  get Category() { return this._category; }
+  set Category(cat: Category) { this._category = cat; this.CategoryChange.emit(this._category); }
 
   // Category Service
   private mCategoryService: CategoryService;
-
-  // Track Category Navigation
-  // private mCategoryId: string[] = [];
 
   /**
    * Constructor.
@@ -34,17 +35,10 @@ export class CategoryComponent implements OnInit {
   }
 
   /**
-   * On Angular Initialization.
-   * Called after object is constructed.
+   * Not used.
    */
   ngOnInit() {
   }
-
-  /**
-   * Set's this.Category to current directory's parent
-   */
-  // public SetToParentCategory(): void {
-  // }
 
   /**
    * Set's this.Category to specified category, or root category if not found.
@@ -54,16 +48,6 @@ export class CategoryComponent implements OnInit {
     this.mCategoryService.GetCategory(categoryId)
       .subscribe((cat: Category) => {
         this.Category = cat;
-        this.CategoryChange.emit(this.Category);
-
-        // // remove unused category IDs
-        // // i.e. when navigating to parent category
-        // const i: number = this.mCategoryId.findIndex(catId => { return catId == categoryId; });
-        // if (i >= 0) {
-        //   this.mCategoryId = this.mCategoryId.slice(0, i + 1);
-        // }
-
-        // console.log(this.mCategoryId);
       }
     );
   }
