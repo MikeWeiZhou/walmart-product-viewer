@@ -8,9 +8,9 @@ export const environment = {
 
     // API Endpoints (URLs)
     "API_ENDPOINTS": {
-      "TAXONOMY":   "http://localhost/api/taxonomy",
+      "TAXONOMY":   "https://walmart-product-viewer.appspot.com/api/taxonomy",
       // "TAXONOMY":   "https://api.walmartlabs.com/v1/taxonomy",
-      "PAGINATED":  "http://localhost/api/paginated",
+      "PAGINATED":  "https://walmart-product-viewer.appspot.com/api/paginated",
       // "PAGINATED":  "https://api.walmartlabs.com/v1/paginated/items",
       "LOOKUP":     "https://api.walmartlabs.com/v1/items"
     }

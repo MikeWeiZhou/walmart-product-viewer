@@ -4,7 +4,7 @@ var request = require('request');
 const APP = express();
 
 // Configuration
-const PORT = 80;
+const PORT = process.env.PORT || 80;
 const DIR_DISTRIBUTION = __dirname.replace(/\\/g, '/') + '/dist/walmart-product-viewer';
 const TAXONOMY_API_URL = 'https://api.walmartlabs.com/v1/taxonomy';
 const PAGINATED_API_URL = 'https://api.walmartlabs.com/v1/paginated/items';
