@@ -28,6 +28,9 @@ export class CategoryService {
   private readonly API_URL: string = environment.WALMART.API_ENDPOINTS.TAXONOMY;
   private readonly ACCESS_URL = `${this.API_URL}?format=json&apiKey=${this.API_KEY}`;
 
+  // Cache
+  private mResponseCache: Category;
+
   /**
    * Constructor.
    * @param http HttpClient
@@ -44,7 +47,27 @@ export class CategoryService {
    * @returns Observable<Category>
    */
   public GetCategory(categoryId?: string): Observable<Category> {
-    // return of(TaxonomyValidMock)
+    // Return from cache if exists
+    const rootCategoryCache: Category = this.getRootCategoryCacheOrNull();
+    if (rootCategoryCache != null) {
+      return of(rootCategoryCache)
+        .pipe(
+          map(root => {
+            // return selected category, if found
+            if (categoryId) {
+              let category: Category = this.getCategoryFromIdOrNull(categoryId, root);
+              if (category != null) {
+                return category;
+              }
+            }
+
+            // return root category by default
+            return root;
+          })
+        );
+    }
+
+    // Return from API
     return this.mHttp.get<any>(this.ACCESS_URL)
       .pipe(
         map(response => {
@@ -55,6 +78,11 @@ export class CategoryService {
             path: '',
             children: response.categories
           };
+
+          // cache root category
+          if (this.getRootCategoryCacheOrNull() == null) {
+            this.setRootCategoryCache(rootCategory);
+          }
 
           // return selected category, if found
           if (categoryId) {
@@ -80,6 +108,25 @@ export class CategoryService {
           )
         )
       );
+  }
+
+  /**
+   * Returns root category cache or null.
+   * @returns Category or null
+   */
+  private getRootCategoryCacheOrNull(): Category {
+    if (this.mResponseCache) {
+      return this.mResponseCache;
+    }
+    return null;
+  }
+
+  /**
+   * Sets root category cache.
+   * @param cat Category
+   */
+  private setRootCategoryCache(cat: Category): void {
+    this.mResponseCache = cat;
   }
 
   /**

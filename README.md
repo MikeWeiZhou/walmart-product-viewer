@@ -14,7 +14,7 @@ An exercise in Angular and API handling.
 
 #### Categories
 - category filtering to assist user searching
-- cache categories (categories don't change often)
+- ~~cache categories (categories don't change often)~~
 - ~~lazy load child categories to improve initial DOM rendering speed~~
 - ~~categories should look like a link (currently looks like a text list)~~
 - ~~should have a parent directory link~~
