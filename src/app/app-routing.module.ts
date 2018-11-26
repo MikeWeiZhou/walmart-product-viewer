@@ -5,7 +5,7 @@ import { ViewerComponent } from './components/viewer/viewer.component';
 import { CategoryViewerComponent } from './components/category-viewer/category-viewer.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/category-viewer', pathMatch: 'full' },
+  { path: '', redirectTo: '/viewer', pathMatch: 'full' },
   { path: 'viewer', component: ViewerComponent },
   { path: 'viewer/:categoryId', component: ViewerComponent },
   { path: 'category-viewer', component: CategoryViewerComponent }

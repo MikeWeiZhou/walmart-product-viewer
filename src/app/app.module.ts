@@ -8,20 +8,22 @@ import { CategoryComponent } from './components/viewer/category/category.compone
 import { ProductsComponent } from './components/viewer/products/products.component';
 import { ViewerComponent } from './components/viewer/viewer.component';
 import { NavigationComponent } from './components/viewer/navigation/navigation.component';
-// import { ProductsFilterComponent } from './components/products-filter/products-filter.component';
 import { CategoryListComponent } from './components/category-viewer/category-list/category-list.component';
 import { CategoryViewerComponent } from './components/category-viewer/category-viewer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+
+    // Product Viewer
+    ViewerComponent,
     CategoryComponent,
     ProductsComponent,
-    ViewerComponent,
     NavigationComponent,
-    // ProductsFilterComponent,
-    CategoryListComponent,
-    CategoryViewerComponent
+
+    // Category Viewer
+    CategoryViewerComponent,
+    CategoryListComponent
   ],
   imports: [
     BrowserModule,

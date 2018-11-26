@@ -63,8 +63,6 @@ export class NavigationComponent implements OnInit, OnChanges {
 
   /**
    * Updates navigation tree.
-   * Note: Can only navigate one level only (i.e. parent -> child or vice versa)
-   *       CAN NOT navigate multi-levels (e.g. grandparent -> child or vice versa)
    * @param oldCategory Category
    * @param newCategory Category
    */
@@ -85,16 +83,41 @@ export class NavigationComponent implements OnInit, OnChanges {
       }
     }
 
-    // New category is inside Navigation Tree
+    // New category is inside Navigation Tree somewhere
     const i: number = this.NavigationTree.findIndex(cat => { return cat.id === newCategory.id });
     if (i >= 0) {
       this.NavigationTree = this.NavigationTree.slice(0, i + 1);
     }
 
-    // Error, clear tree and re-build
+    // Can't find Category anywhere, clear tree and re-build
     else  {
-      this.NavigationTree = [];
-      this.NavigationTree.push(newCategory);
+      this.rebuildNavigationTreeFromCategory(newCategory);
     }
+  }
+
+  /**
+   * Re-build navigation tree.
+   * 
+   * TO DO: INCOMPLETE FUNCTION.
+   * 
+   * Required when a child Category is the first node.
+   * Usually the first node is the root Category.
+   * @param category Category
+   */
+  private rebuildNavigationTreeFromCategory(category: Category) {
+    this.NavigationTree = [];
+    this.NavigationTree.push(category);
+
+    // const rootCat: Category = await this.mCategoryService.GetCategory();
+    //   .subscribe((rootCat: Category) => {
+    //     let allCatIds: string[] = category.id.split('_');
+    //     let catId: string = allCatIds[0];
+
+    //     this.NavigationTree = [];
+    //     for (let i = 0; i < allCatIds.length; ++i) {
+    //       this.NavigationTree.push(category);
+    //     }
+    //   }
+    // );
   }
 }
