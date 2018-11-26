@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { CategoryComponent } from './components/category/category.component';
 import { ProductsComponent } from './components/products/products.component';
 import { ViewerComponent } from './components/viewer/viewer.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CategoryComponent,
     ProductsComponent,
-    ViewerComponent
+    ViewerComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
