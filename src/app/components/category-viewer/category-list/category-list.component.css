@@ -1,0 +1,7 @@
+ul.child-categories {
+  display: none;
+}
+
+ul.expanded-category {
+  display: block;
+}

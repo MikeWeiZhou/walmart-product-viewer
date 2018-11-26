@@ -1,0 +1,5 @@
+<ul class="categories">
+  <li *ngFor="let category of Categories$ | async">
+    <app-category-list [Category]="category"></app-category-list>
+  </li>
+</ul>
