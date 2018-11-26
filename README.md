@@ -8,19 +8,20 @@ An exercise in Angular and API handling.
 ## To Do / Future Improvements
 
 #### General
-- modal/popup notification for errors
+- modal/popup notification for errors (currently uses Logger service to write to console)
 - disable buttons/links when user navigates to new page and is loading in progress
 - log history for browser (back button does not work properly)
 
 #### Categories
-- **category filtering** to assist user searching
+- category filtering to assist user searching
 - cache categories (categories don't change often)
 - ~~lazy load child categories to improve initial DOM rendering speed~~
 - ~~categories should look like a link (currently looks like a text list)~~
 - ~~should have a parent directory link~~
 
 #### Products
-- **product filtering** to assit user searching (currently shows 10 products per page...)
+- product filtering to assit user searching (currently shows 10 products per page...)
+- show page numbers
 - have default image (some image links are broken)
 - cache page results
 - prefetch next page when there's spare network capacity

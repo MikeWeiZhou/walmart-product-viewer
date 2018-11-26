@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 
-import { Category } from '../../models/category';
-import { Product } from '../../models/product';
+import { Category } from 'src/app/models/category';
+import { Product } from 'src/app/models/product';
 
 import { PaginatedService } from 'src/app/services/paginated.service';
 import { getLocaleNumberSymbol } from '@angular/common';
@@ -11,6 +11,11 @@ import { getLocaleNumberSymbol } from '@angular/common';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
+/**
+ * ProductsComponent.
+ * 
+ * Displays products in a selected Category.
+ */
 export class ProductsComponent implements OnInit, OnChanges {
 
   // Category

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 
-import { Category } from '../../models/category';
+import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
@@ -8,6 +8,11 @@ import { CategoryService } from 'src/app/services/category.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
+/**
+ * NavigationComponent.
+ * 
+ * Navigation breadcrumbs for Categories.
+ */
 export class NavigationComponent implements OnInit, OnChanges {
 
   // Current Category input/outputs

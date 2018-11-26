@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CategoryListComponent } from './components/category-viewer/category-list/category-list.component';
 import { ViewerComponent } from './components/viewer/viewer.component';
 import { CategoryViewerComponent } from './components/category-viewer/category-viewer.component';
 
