@@ -1,3 +1,8 @@
+<a routerLink="/viewer">Visit Product Viewer!</a>
+<br/>
+<br/>
+<br/>
+
 <ul class="categories">
   <li *ngFor="let category of Categories$ | async">
     <app-category-list [Category]="category"></app-category-list>
