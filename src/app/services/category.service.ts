@@ -4,7 +4,6 @@ import { Observable, of, ObservableInput } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
-import { TaxonomyValidMock } from '../mockdata/taxonomy-valid.mock';
 
 import { Category } from '../models/category';
 import { LoggerService } from './logger.service';
