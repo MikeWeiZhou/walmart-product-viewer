@@ -1,9 +1,20 @@
 # Walmart Product Viewer
 An exercise in Angular and API handling.
 
-## NPM Commands
-- **npm run dev** runs server in development mode (uses default environment: *environment.ts*)
-- **npm run build** builds for production, all artificats stored in folder */dist*
+## To Run Server In Development Mode
+This will run Angular's built-in development server
+
+1. clone Git repository
+2. at project directory, run command: **npm install**
+3. at project directory, run command: **npm run dev**
+
+## To Run Server In Production Mode
+This will run Express server on Node.js
+
+1. clone Git repository
+2. at project directory, run command: **npm install**
+3. at project directory, run command: **npm run build**
+4. at project directory, run command: **npm start**
 
 ## To Do / Future Improvements
 
