@@ -67,9 +67,9 @@ export class NavigationComponent implements OnInit, OnChanges {
    * @param newCategory Category
    */
   private updateNavigationTree(oldCategory: Category, newCategory: Category): void {
-    // No existing tree
+    // No existing navigation tree
     if (!oldCategory) {
-      this.NavigationTree.push(newCategory);
+      this.rebuildNavigationTreeFromCategory(newCategory);
       return;
     }
 
@@ -87,12 +87,11 @@ export class NavigationComponent implements OnInit, OnChanges {
     const i: number = this.NavigationTree.findIndex(cat => { return cat.id === newCategory.id });
     if (i >= 0) {
       this.NavigationTree = this.NavigationTree.slice(0, i + 1);
+      return;
     }
 
-    // Can't find Category anywhere, clear tree and re-build
-    else  {
-      this.rebuildNavigationTreeFromCategory(newCategory);
-    }
+    // Can't find Category anywhere, re-build navigation tree
+    this.rebuildNavigationTreeFromCategory(newCategory);
   }
 
   /**
@@ -105,19 +104,42 @@ export class NavigationComponent implements OnInit, OnChanges {
    * @param category Category
    */
   private rebuildNavigationTreeFromCategory(category: Category) {
-    this.NavigationTree = [];
-    this.NavigationTree.push(category);
+    this.mCategoryService.GetCategory()
+      .subscribe((rootCat: Category) => {
+        // there is only root category
+        if (rootCat.id === category.id) {
+          this.NavigationTree = [category];
+          return;
+        }
 
-    // const rootCat: Category = await this.mCategoryService.GetCategory();
-    //   .subscribe((rootCat: Category) => {
-    //     let allCatIds: string[] = category.id.split('_');
-    //     let catId: string = allCatIds[0];
+        // delimiter in category id
+        // e.g. 91083_1212910_1212923
+        const delimiter: string = '_';
 
-    //     this.NavigationTree = [];
-    //     for (let i = 0; i < allCatIds.length; ++i) {
-    //       this.NavigationTree.push(category);
-    //     }
-    //   }
-    // );
+        // split individual categories from the category id
+        // e.g.          91083_1212910_1212923
+        //   turns into: ['91083', '1212910', '1212923']
+        const allCatIds: string[] = category.id.split(delimiter);
+
+        // create new navigation tree with all categories and +1 for root category
+        this.NavigationTree = new Array(allCatIds.length + 1);
+        this.NavigationTree[0] = rootCat;
+
+        // start with the child category and traverse to parent
+        // e.g. 91083_1212910_1212923
+        let catId: string = category.id;
+        for (let i = allCatIds.length - 1; i >= 0; --i) {
+          this.mCategoryService.GetCategory(catId)
+            .subscribe((cat: Category) => {
+              // shift +1 because this.NavigationTree[0] is taken by root category
+              this.NavigationTree[i+1] = cat;
+
+              // trim last category from catId
+              catId = catId.replace(delimiter + allCatIds[i], '');
+            }
+          );
+        }
+      }
+    );
   }
 }
