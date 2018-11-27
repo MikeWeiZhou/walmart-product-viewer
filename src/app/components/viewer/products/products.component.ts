@@ -4,7 +4,6 @@ import { Category } from 'src/app/models/category';
 import { Product } from 'src/app/models/product';
 
 import { PaginatedService } from 'src/app/services/paginated.service';
-import { getLocaleNumberSymbol } from '@angular/common';
 
 @Component({
   selector: 'app-products',

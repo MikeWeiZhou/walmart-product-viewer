@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
@@ -26,10 +26,17 @@ export class ViewerComponent implements OnInit {
   /**
    * Constructor.
    * @param category CategoryService
+   * @param route ActivatedRoute
+   * @param router Router
    */
-  constructor(category: CategoryService, route: ActivatedRoute) {
+  constructor(category: CategoryService, route: ActivatedRoute, router: Router) {
     this.mCategoryService = category;
     this.mRoute = route;
+
+    // Same route with different parameters will not trigger a refresh
+    // i.e. Clicking on child categories does not trigger refresh
+    // This setting will trigger a refresh on all visible components
+    router.routeReuseStrategy.shouldReuseRoute = () => { return false; };
   }
 
   /**
@@ -45,7 +52,7 @@ export class ViewerComponent implements OnInit {
    * Set's this.Category to specified category, or root category if not found.
    * @param [categoryId] specified category ID
    */
-  public setCategory(categoryId?: string): void {
+  private setCategory(categoryId?: string): void {
     this.mCategoryService.GetCategory(categoryId)
       .subscribe((cat: Category) => {
         this.Category = cat;

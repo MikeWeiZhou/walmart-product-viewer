@@ -3,7 +3,7 @@
     {{ Category.name }}
     <ul class="child-category" *ngIf="Category.children">
       <li *ngFor="let childCategory of Category.children">
-        <a (click)="SetCategory(childCategory.id)">{{ childCategory.name }}</a>
+        <a routerLink="/viewer/{{ childCategory.id }}">{{ childCategory.name }}</a>
       </li>
     </ul>
   </li>

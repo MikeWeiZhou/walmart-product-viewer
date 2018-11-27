@@ -16,14 +16,9 @@ import { CategoryService } from 'src/app/services/category.service';
 export class NavigationComponent implements OnInit, OnChanges {
 
   // Current Category input/outputs
-  // Synchronizes Category with parent components
-  @Output() public CategoryChange: EventEmitter<Category> = new EventEmitter<Category>();
-  private _category: Category;
-  @Input()
-  get Category() { return this._category; }
-  set Category(cat: Category) { this._category = cat; this.CategoryChange.emit(this._category); }
+  @Input() public Category: Category;
 
-  // Navigation
+  // Navigation Tree
   public NavigationTree: Category[] = [];
 
   // Category Service
@@ -49,58 +44,12 @@ export class NavigationComponent implements OnInit, OnChanges {
    */
   ngOnChanges(changes: SimpleChanges) {
     if (changes.Category.currentValue !== changes.Category.previousValue) {
-      this.updateNavigationTree(changes.Category.previousValue, changes.Category.currentValue);
+      this.rebuildNavigationTreeFromCategory(changes.Category.currentValue);
     }
   }
 
   /**
-   * Set's this.Category to specified category.
-   * @param cat Category
-   */
-  public SetCategory(cat: Category): void {
-    this.Category = cat;
-  }
-
-  /**
-   * Updates navigation tree.
-   * @param oldCategory Category
-   * @param newCategory Category
-   */
-  private updateNavigationTree(oldCategory: Category, newCategory: Category): void {
-    // No existing navigation tree
-    if (!oldCategory) {
-      this.rebuildNavigationTreeFromCategory(newCategory);
-      return;
-    }
-
-    // Navigating from parent to child
-    if (oldCategory.children)  {
-      const isParentToChild: boolean =
-        (undefined != oldCategory.children.find(cat => { return cat.id === newCategory.id; }));
-      if (isParentToChild) {
-        this.NavigationTree.push(newCategory);
-        return;
-      }
-    }
-
-    // New category is inside Navigation Tree somewhere
-    const i: number = this.NavigationTree.findIndex(cat => { return cat.id === newCategory.id });
-    if (i >= 0) {
-      this.NavigationTree = this.NavigationTree.slice(0, i + 1);
-      return;
-    }
-
-    // Can't find Category anywhere, re-build navigation tree
-    this.rebuildNavigationTreeFromCategory(newCategory);
-  }
-
-  /**
-   * Re-build navigation tree.
-   * 
-   * TO DO: INCOMPLETE FUNCTION.
-   * 
-   * Required when a child Category is the first node.
-   * Usually the first node is the root Category.
+   * Re-build navigation tree from category.
    * @param category Category
    */
   private rebuildNavigationTreeFromCategory(category: Category) {

@@ -1,3 +1,3 @@
 <span *ngFor="let cat of NavigationTree">
-  &raquo; <a (click)="SetCategory(cat)">{{ cat.name }}</a>
+  &raquo; <a routerLink="/viewer/{{ cat.id }}">{{ cat.name }}</a>
 </span>
